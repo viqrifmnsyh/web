@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Rental Mobil</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 56px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash Screen -->
+<div id="splash-screen" class="d-flex justify-content-center align-items-center" style="height: 100vh; background-color: #3498db; color: #fff;">
+    <h1>Selamat Datang di Aplikasi Rental Dan Jual Beli Mobil</h1>
+</div>
+
+    <header>
+        <h1>Dapatkan Promo Mobil Sekarang!!!</h1>
+    </header>
+
+    <section>
+        <div class="car">
+            <img src="2089aaefa5524ed3bcd80f3973169207_678x380.jpg" alt="Mobil Pertama">
+            <h2>Mobil KIARIO</h2>
+            <p>Harga: Rp.200.000.000,00</p>
+            <p>Deskripsi: Mobil Kiario dilengkapi dengan fitur keamanan terkini.</p>
+            <button onclick="beliMobil('Mobil KIARIO', Rp20000000000)">Beli</button>
+        </div>
+
+        <div class="car">
+            <img src="Suzuki_Ignis_GX_Hero_Angle_FLIP_STARGAZE_ORANYE___BLACK1-nn.webp" alt="Mobil Kedua">
+            <h2>Mobil IGNIS</h2>
+            <p>Harga: Rp.150.000.000,00
+        </p>
+        Mobil Ignis sangat nyaman dan irit bahan bakar
+            <p>Deskripsi: Mobil Ignis sangat nyaman dan irit bahan bakar.</p>
+            <button onclick="beliMobil('Mobil IGNIS', Rp15000000000)">Beli</button>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2023 List Mobil
+    </footer>
+
+    <script>
+        function beliMobil(namaMobil, harga) {
+            alert('Anda telah membeli ' + namaMobil + ' seharga $' + harga);
+        }
+    </script>
+
+<!-- Main Content -->
+<div id="main-content" style="display: none;">
+    <div class="container">
+        <h2>Data Mobil</h2>
+
+        <!-- Form CRUD -->
+        <form id="carForm">
+            <div class="form-group">
+                <label for="carName">Nama Mobil:</label>
+                <input type="text" class="form-control" id="carName" required>
+            </div>
+            <div class="form-group">
+                <label for="rentalDays">Lama Sewa (hari):</label>
+                <input type="number" class="form-control" id="rentalDays" required>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="addCar()">Tambah Mobil</button>
+        </form>
+
+        <!-- Tabel Data -->
+        <table class="table mt-4">
+            <thead>
+            <tr>
+                <th>Nama Mobil</th>
+                <th>Lama Sewa (hari)</th>
+                <th>Total Biaya</th>
+                <th>Aksi</th>
+            </tr>
+            </thead>
+            <tbody id="carTableBody">
+            <!-- Data Mobil akan ditampilkan di sini -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Custom Script -->
+    <script>
+        // Data Mobil
+        let cars = [];
+
+        // Function untuk menambah mobil
+        function addCar() {
+            const carName = document.getElementById("carName").value;
+            const rentalDays = parseInt(document.getElementById("rentalDays").value);
+
+            // Perhitungan Biaya
+            const totalCost = rentalDays * 250; // Biaya sewa per hari adalah 250
+
+            // Menambahkan mobil ke array
+            cars.push({
+                name: carName,
+                days: rentalDays,
+                cost: totalCost
+            });
+
+            // Memperbarui tabel
+            updateTable();
+
+            // Mengosongkan formulir
+            document.getElementById("carForm").reset();
+        }
+
+        // Function untuk menghapus mobil
+        function deleteCar(index) {
+            cars.splice(index, 1);
+            updateTable();
+        }
+
+        // Function untuk memperbarui tabel
+        function updateTable() {
+            const tableBody = document.getElementById("carTableBody");
+            tableBody.innerHTML = "";
+
+            cars.forEach((car, index) => {
+                const row = tableBody.insertRow();
+                row.innerHTML = `
+                    <td>${car.name}</td>
+                    <td>${car.days}</td>
+                    <td>${car.cost}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger" onclick="deleteCar(${index})">Hapus</button>
+                    </td>
+                `;
+            });
+        }
+
+        // Menampilkan main content setelah splash screen
+        setTimeout(() => {
+            document.getElementById("splash-screen").style.display = "none";
+            document.getElementById("main-content").style.display = "block";
+        }, 3000); // Splash screen akan muncul selama 3 detik
+    </script>
+</body>
+</html>
